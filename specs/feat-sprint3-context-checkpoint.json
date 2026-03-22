@@ -1,0 +1,41 @@
+{
+  "id": "feat-sprint3-context-checkpoint",
+  "title": "Sprint 3 — Context Window Management",
+  "status": "passing",
+  "priority": 3,
+  "phase": 1,
+  "totalPhases": 1,
+  "created": "2026-03-22",
+  "updated": "2026-03-22",
+  "riskLevel": "low",
+  "description": "Adds intelligent context window management to the harness. Detects when a session approaches ~60% of the model's context budget (threshold: 2.4 MB transcript size or 10 major dispatches), saves session state to .memory/checkpoints/, creates a WIP commit, compacts long-term memory, and generates a self-contained Resume Prompt so the next session can continue without re-explaining context. Integrates into the Maestro Playbook as a pre-dispatch check.",
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "description": "skills/context-checkpoint.md exists with Detection section (transcript size check + dispatch counter), Checkpoint Procedure (7 steps: announce, flush to-dos, WIP commit, compact memory, write checkpoint file, update long-term memory, present resume prompt), Restart Procedure for Claude Code and OpenCode, Resume Procedure for new sessions, manual trigger, and guardrails",
+      "status": "passing"
+    },
+    {
+      "id": "ac-2",
+      "description": "personas/maestro.md Playbook updated: Boot step initializes DISPATCH_COUNT=0; new step 3 'Context budget' runs context-checkpoint detection before every dispatch; Dispatch step increments DISPATCH_COUNT after each dispatch; version bumped to 0.4.0",
+      "status": "passing"
+    },
+    {
+      "id": "ac-3",
+      "description": "skills/README.md index updated to include context-checkpoint and all Sprint 1/2 skills that were missing from the table",
+      "status": "passing"
+    },
+    {
+      "id": "ac-4",
+      "description": "CHANGELOG.md updated with version 0.5.0 entry",
+      "status": "passing"
+    }
+  ],
+  "affectedFiles": [
+    "skills/context-checkpoint.md",
+    "personas/maestro.md",
+    "skills/README.md",
+    "CHANGELOG.md"
+  ],
+  "notes": "Transcript-size detection uses the most recently modified .jsonl (Claude Code) or .json (OpenCode) session file. Falls back to dispatch counter when the transcript path is not accessible. The Resume Prompt is the core deliverable — it must be fully self-contained so zero context is assumed in the new session."
+}

@@ -1,6 +1,11 @@
 # Changelog
 
 ```log
+0.5.0 - 2026/03/22
+feat: add context-checkpoint skill — transcript-size + dispatch-counter detection, 7-step checkpoint procedure, WIP commit + memory compaction integration, self-contained Resume Prompt, restart procedure for Claude Code and OpenCode
+feat(maestro): add context budget check as pre-dispatch step; initialize DISPATCH_COUNT on boot; increment per dispatch; version bumped to 0.4.0
+refactor(skills/README): sync index — add all Sprint 1/2/3 skills missing from the table
+
 0.4.0 - 2026/03/22
 feat: add git-recovery skill — checkpoint strategy, clean state definition, bisect/revert/reset playbook, session handoff via WIP commits
 feat: add memory-compaction skill — prune resolved issues, remove superseded rules, resolve contradictions, promote stable lessons to rules/
