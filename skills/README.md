@@ -4,13 +4,19 @@ Skills are collected intelligence on how to operate a specific tool — whether 
 
 ### Available Skills
 
-| Skill                  | Description                                                     |
-| ---------------------- | --------------------------------------------------------------- |
-| `agent-memory`         | Long-term memory across sessions                                |
-| `boot`                 | Session startup — gitignore, auto-update, memory, rules, orient |
-| `context-maintenance`  | How to maintain .context.md files as the project evolves        |
-| `dispatch`             | Assembles sub-agent prompts with task brief                     |
-| `task-tracking`        | File-based to-do tracking for multi-step and multi-session work |
+| Skill                  | Description                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| `agent-memory`         | Long-term memory across sessions                                             |
+| `boot`                 | Session startup — gitignore, auto-update, memory, rules, orient              |
+| `context-checkpoint`   | Detect approaching context limit, save session state, prepare restart prompt |
+| `context-maintenance`  | How to maintain .context.md files as the project evolves                     |
+| `dispatch`             | Assembles sub-agent prompts with task brief                                  |
+| `error-recovery`       | Error classification, max-retry policy, and Maestro escalation               |
+| `git-recovery`         | Clean state definition, checkpoint strategy, bisect/revert/reset ladder      |
+| `handoff-format`       | Machine-readable frontmatter schema and structured sections for all personas |
+| `memory-compaction`    | Prune stale entries, resolve contradictions, promote stable lessons           |
+| `task-tracking`        | File-based to-do tracking for multi-step and multi-session work              |
+| `testing`              | Three-tier test protocol with Playwright CLI as primary tool                 |
 
 ## When to Extract a Skill
 

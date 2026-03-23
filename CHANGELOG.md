@@ -1,6 +1,34 @@
 # Changelog
 
 ```log
+0.5.0 - 2026/03/22
+feat: add context-checkpoint skill — transcript-size + dispatch-counter detection, 7-step checkpoint procedure, WIP commit + memory compaction integration, self-contained Resume Prompt, restart procedure for Claude Code and OpenCode
+feat(maestro): add context budget check as pre-dispatch step; initialize DISPATCH_COUNT on boot; increment per dispatch; version bumped to 0.4.0
+refactor(skills/README): sync index — add all Sprint 1/2/3 skills missing from the table
+
+0.4.0 - 2026/03/22
+feat: add git-recovery skill — checkpoint strategy, clean state definition, bisect/revert/reset playbook, session handoff via WIP commits
+feat: add memory-compaction skill — prune resolved issues, remove superseded rules, resolve contradictions, promote stable lessons to rules/
+feat: add handoff-format skill — machine-readable frontmatter (persona, task, status, timestamp) with structured sections for all personas
+feat: add docs/ directory — tiered context layer for architecture, decisions, domains, and runbooks with mandatory "What Agents Must Know" section
+feat(boot): add docs/ tier to boot sequence; trigger memory compaction when .memory/long-term.md exceeds 150 lines or framework updates
+feat(coder): add git-recovery checkpoint step to Playbook; delegate handoff structure to handoff-format skill
+feat(dispatch): always include git-recovery and handoff-format for all Coder and persona dispatches
+refactor: remove evals, observability, and HITL from Sprint 2 scope — redundant for CLI-based usage (Claude Code + OpenCode)
+
+0.3.0 - 2026/03/22
+feat: add testing skill — three-tier protocol (unit, integration, E2E) with Playwright CLI as primary tool and MCP as optional investigation mode
+feat: add security commandment (scope: all) — input validation, least-privilege, secret protection, output sanitization, destructive action gates, dependency verification (OWASP Agentic Top 10)
+feat: add error-recovery skill — 6 error classes, max-2-retry rule, Capability Gap report template, Maestro escalation flow
+feat: add specs/ directory and README — JSON feature spec schema with per-criterion status tracking (failing → passing)
+feat(architect): produce JSON feature spec alongside plan document; set riskLevel for high-impact changes
+feat(coder): reference testing and error-recovery skills in Playbook; add Test Results section to handoff; update spec criterion status as tests pass
+feat(maestro): pass spec path in task briefs; handle Capability Gap escalations (fix/defer/cancel); surface [DESTRUCTIVE] actions for user approval
+feat(reviewer): cross-reference spec acceptanceCriteria against handoff Test Results; flag mismatches as blockers
+feat(task-tracking): derive to-do items from specs/*.json acceptanceCriteria; sync item completion back to spec status
+feat(boot): note security.md scope:all applies to every task
+feat(dispatch): always include testing and error-recovery skills for Coder dispatches
+
 0.2.3 - 2026/03/10
 feat(boot): add gitignore check — ensure .agents/ and .memory/ are in project .gitignore on startup
 feat(boot): add auto-update — pull latest framework on session start, reboot if changes detected
