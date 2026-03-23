@@ -1,0 +1,27 @@
+{
+  "name": "@gugamistri/harness",
+  "version": "0.6.0",
+  "description": "AI agent harness — skills, personas, rules, and specs for production-grade multi-agent workflows.",
+  "keywords": ["ai", "agents", "llm", "harness", "claude", "opencode", "multi-agent"],
+  "homepage": "https://github.com/gugamistri/agent-starter-kit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gugamistri/agent-starter-kit.git"
+  },
+  "license": "MIT",
+  "bin": {
+    "harness": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "personas/",
+    "rules/",
+    "docs/",
+    "specs/README.md",
+    "AGENTS.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

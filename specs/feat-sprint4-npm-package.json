@@ -1,0 +1,50 @@
+{
+  "id": "feat-sprint4-npm-package",
+  "title": "Sprint 4 — NPM Package Distribution",
+  "status": "passing",
+  "priority": 4,
+  "phase": 1,
+  "totalPhases": 1,
+  "created": "2026-03-23",
+  "updated": "2026-03-23",
+  "riskLevel": "low",
+  "description": "Packages the harness as an NPM module (@gugamistri/harness) so it can be installed into any project via `npx @gugamistri/harness init`. A zero-dependency Node.js CLI copies harness files (skills, personas, rules, docs, specs schema, AGENTS.md) from the package into the target project directory. Supports selective module install, --force overwrite, and --dry-run preview.",
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "description": "package.json exists with name @gugamistri/harness, version 0.6.0, bin.harness pointing to ./bin/cli.js, files array excluding specs/*.json and CHANGELOG.md, engines.node >=18, no runtime dependencies",
+      "status": "passing"
+    },
+    {
+      "id": "ac-2",
+      "description": "bin/cli.js is executable, zero external dependencies, implements: init (copy all or --modules subset), update (init --force), list (show available modules), help. Handles --force and --dry-run flags. Skips existing files by default with warning.",
+      "status": "passing"
+    },
+    {
+      "id": "ac-3",
+      "description": "`node bin/cli.js init --dry-run` runs without error and prints what would be installed",
+      "status": "passing"
+    },
+    {
+      "id": "ac-4",
+      "description": "`node bin/cli.js init` in a temp directory creates skills/, personas/, rules/, docs/, specs/README.md, AGENTS.md",
+      "status": "passing"
+    },
+    {
+      "id": "ac-5",
+      "description": "CHANGELOG.md updated with 0.6.0 entry",
+      "status": "passing"
+    }
+  ],
+  "affectedFiles": [
+    "package.json",
+    "bin/cli.js",
+    "CHANGELOG.md",
+    "specs/feat-sprint4-npm-package.json"
+  ],
+  "publishInstructions": {
+    "firstPublish": "npm login && npm publish --access public",
+    "update": "bump version in package.json, git tag vX.Y.Z, npm publish --access public"
+  },
+  "notes": "The repo remains usable as a direct clone/fork — package.json and bin/ are additive. specs/*.json (project-specific tracking files) are excluded from the npm bundle via the files array. Users who install via npx get only the harness skeleton; they create their own specs/ entries for their projects."
+}

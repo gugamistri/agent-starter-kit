@@ -1,6 +1,13 @@
 # Changelog
 
 ```log
+0.6.0 - 2026/03/23
+feat: package harness as NPM module @gugamistri/harness
+- package.json: name, version, bin, files array (excludes project-specific specs)
+- bin/cli.js: zero-dependency Node.js CLI — init, update, list, help commands
+  --modules=a,b for selective install, --force to overwrite, --dry-run to preview
+- publish: npm login && npm publish --access public
+
 0.5.0 - 2026/03/22
 feat: add context-checkpoint skill — transcript-size + dispatch-counter detection, 7-step checkpoint procedure, WIP commit + memory compaction integration, self-contained Resume Prompt, restart procedure for Claude Code and OpenCode
 feat(maestro): add context budget check as pre-dispatch step; initialize DISPATCH_COUNT on boot; increment per dispatch; version bumped to 0.4.0
