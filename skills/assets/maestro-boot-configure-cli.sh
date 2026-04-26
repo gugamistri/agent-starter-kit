@@ -80,13 +80,13 @@ resolveSupportedCliConfigPath() {
 
 readPersonaFrontmatter() {
   local personaPath="$1"
-  sed -n '/^---$/,/^---$/{ //d; p }' "$personaPath"
+  awk '/^---$/{if(seen){exit}seen=1;next}seen' "$personaPath"
 }
 
 readProvidersYamlBlock() {
   local dispatchMdPath
   dispatchMdPath="$(resolveScriptDir)/../dispatch.md"
-  sed -n '/^## Providers$/,/^## /{ /^```yaml$/,/^```$/{ /^```/d; p } }' "$dispatchMdPath"
+  awk '/^## Providers$/{in_section=1; next} /^## /{if(in_section) exit} in_section && /^```yaml$/{in_yaml=1; next} in_yaml && /^```$/{exit} in_yaml' "$dispatchMdPath"
 }
 
 resolveSupportedCliProviderName() {
