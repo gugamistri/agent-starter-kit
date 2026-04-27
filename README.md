@@ -20,7 +20,9 @@ The **Maestro** is the conductor. It receives user requests, decomposes them, an
 - **Reviewer** — checks work for correctness and quality
 - **Contextualizer** — documents project structure for orientation
 
-Each persona has an identity (who they are), a playbook (what they do), a handoff format (what they deliver), and red lines (what they must not do). Each persona also declares a `humor` style — which controls temperature and thinking budget — plus a self-review rubric that scores its own work before delivery. Each persona declares a `preferredModel` — the Maestro uses this to route work to the right provider automatically. You can route every persona to the same model and skip multi-provider routing entirely if you prefer.
+Each persona has an identity (who they are), a playbook (what they do), a handoff format (what they deliver), and red lines (what they must not do).
+
+Each persona also declares a `humor` style — which controls temperature and thinking budget — plus a self-review rubric that scores its own work before delivery. The `preferredModel` field routes work to the right provider automatically. You can route every persona to the same model and skip multi-provider routing entirely if you prefer.
 
 The framework **learns as it works**. Corrections, preferences, and lessons are captured to long-term memory and carried into every future session. Interrupted work is tracked in session files so the next boot can resume where the last one stopped.
 
@@ -89,7 +91,6 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 - **review-loop** — LOC-based review tier selection with shapeshifter dispatch
 - **reviewer-architect-adversarial** — adversarial plan validation and assumption attack
 - **reviewer-handoff** — structured review summary format with verdict logic
-- **reviewer-scoring** — deterministic checklist-based review scoring
 - **reviewer-self-review** — SHIELD self-review rubric — unified reviewer quality gate
 - **task-tracking** — file-based to-do for multi-step work
 

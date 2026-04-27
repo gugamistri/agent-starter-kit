@@ -11,8 +11,8 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.5.2
-# @updated      2026-04-25
+# @version      0.5.3
+# @updated      2026-04-27
 set -euo pipefail
 
 checkRequiredDependencies() {
@@ -80,13 +80,13 @@ resolveSupportedCliConfigPath() {
 
 readPersonaFrontmatter() {
   local personaPath="$1"
-  awk '/^---$/{if(seen){exit}seen=1;next}seen' "$personaPath"
+  awk '/^---$/{n++; next} n==1{print} n==2{exit}' "$personaPath"
 }
 
 readProvidersYamlBlock() {
   local dispatchMdPath
   dispatchMdPath="$(resolveScriptDir)/../dispatch.md"
-  awk '/^## Providers$/{in_section=1; next} /^## /{if(in_section) exit} in_section && /^```yaml$/{in_yaml=1; next} in_yaml && /^```$/{exit} in_yaml' "$dispatchMdPath"
+  awk '/^## Providers$/{inProviders=1; next} /^## /{inProviders=0} inProviders && /^```yaml$/{inBlock=1; next} inBlock && /^```$/{exit} inBlock{print}' "$dispatchMdPath"
 }
 
 resolveSupportedCliProviderName() {

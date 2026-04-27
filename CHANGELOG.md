@@ -1,6 +1,18 @@
 # Changelog
 
 ```log
+0.6.0 - 2026/04/27
+fix(personas/coder.md): restore corrupted file — all newlines were stripped into single line, adapted for starter kit (no cognitive-lens, simplified steps)
+fix(personas/maestro.md): break dense Parse step into numbered sub-list for complex prompts, add `skills/dispatch.md` to every dispatch reference
+fix(personas/maestro.md): add sub-agent output context to Review loop step, add task-tracking skill reference to Deliver step
+fix(personas/architect.md): remove Confidence score section — redundant with DRAFT self-review
+fix(skills/reviewer-handoff.md): remove Coverage checklist — already covered by SHIELD self-review, focus skill on handoff format only
+delete(skills/reviewer-scoring.md): vestigial, checklist inlined into reviewer-handoff.md
+fix(skills/assets/maestro-boot-configure-cli.sh): replace sed with awk for frontmatter and YAML extraction — macOS/BSD sed incompatibility
+docs(readme): fix duplicate preferredModel paragraph, consolidate persona section
+docs(personas/readme): bump schema to v0.1.1 for humor field addition
+docs(skills/readme): remove reviewer-scoring from skills list
+
 0.5.9 - 2026/04/25
 fix(skills/maestro-boot-configure-cli.sh): accept host modelId as $1 to resolve correct provider when multiple providers share the same CLI (deepseek/qwen both use opencode), fallback to first match when omitted
 fix(skills/boot.md): pass modelId to configure-cli.sh script
