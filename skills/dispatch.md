@@ -117,6 +117,22 @@ providers:
     tier-1: bailian-coding-plan/qwen3-coder-next
     tier-2: bailian-coding-plan/qwen3.5-plus
     tier-3: bailian-coding-plan/qwen3.6-plus
+  minimax: 
+    cli: opencode
+    tier-1: minimax-coding-plan/MiniMax-M2.5
+    tier-2: minimax-coding-plan/MiniMax-M2.7
+    tier-3: minimax-coding-plan/MiniMax-M2.7
+  zai: 
+    cli: opencode
+    tier-1: zai-coding-plan/glm-4.7
+    tier-2: zai-coding-plan/glm-5-turbo
+    tier-3: zai-coding-plan/glm-5.1
+  kimi: 
+    cli: opencode
+    tier-1: moonshotai/kimi-k2-turbo-preview
+    tier-2: moonshotai/kimi-k2.6
+    tier-3: moonshotai/kimi-k2.6
+
 ```
 
 Tier classes: **tier-1** = fast/cheap, **tier-2** = balanced, **tier-3** = reasoning/smartest.
