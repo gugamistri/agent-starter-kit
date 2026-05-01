@@ -1,6 +1,10 @@
 # Changelog
 
 ```log
+0.6.1 - 2026/04/30
+fix(configure-cli): change all personas from edit/bash deny to ask — write tools hidden when deny matches project root; compound commands (pipes, redirects) now prompt instead of silently failing
+feat(boot): add ensureHiddenDirectoriesAreSearchable to maestro-boot-configure-cli.sh — creates .ignore at project root with !.agents/ and !.memory/ entries so AI tooling (glob/grep) can search hidden gitignored directories; ensureGitignoreEntry '.ignore' added to .gitignore
+
 0.6.0 - 2026/04/27
 fix(personas/coder.md): restore corrupted file — all newlines were stripped into single line, adapted for starter kit (no cognitive-lens, simplified steps)
 fix(personas/maestro.md): break dense Parse step into numbered sub-list for complex prompts, add `skills/dispatch.md` to every dispatch reference

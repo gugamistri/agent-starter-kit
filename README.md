@@ -1,15 +1,15 @@
 # Agent Starter Kit
 
-> Speak naturally. A Maestro agent breaks your request into tasks and routes each one to a specialized AI model.
+> Describe what you need in plain language. The Maestro agent breaks it into tasks and routes each one to a specialized AI model.
 
-The scaffold for a fully customizable, **multi-model** AI harness in **pure natural language**. The smartest model orchestrates the workflow while cheaper/faster ones handle the less complicated bits, **extending your premium coding plan (such as Claude Code)**.
+Agent Starter Kit is a Natural Language AI Harness (NLAH) — multi-model, pure Markdown, zero dependencies. The smartest model orchestrates while cheaper, faster ones handle the routine work — extending your premium coding plan (such as Claude Code) instead of burning it on everything.
 
-It's model-agnostic: orchestrate from Claude, plan on Kimi, review on Qwen, or any combination you want.
+It's model-agnostic: orchestrate on Claude, plan on Kimi, review on Qwen, or any combination you choose.
 
 ![Boot sequence demo](docs/demo.jpg)
 _Maestro booted on a Clean Architecture Go project — gitignore, auto-update, memory, rules, and 33 context files created automatically._
 
-This is a **foundation**, not a finished product. It ships only what an average developer needs out of the box — general-purpose personas, common workflow skills, and unopinionated rules. Anything domain-specific or highly opinionated belongs in your own fork. Clone it, extend it, make it yours — or better yet, make one for your entire company to use.
+This is a **foundation**, not a finished product. It ships what an average developer needs out of the box — general-purpose personas, common workflow skills, and unopinionated rules. Anything domain-specific or highly opinionated belongs in your own fork. Clone it, extend it, make it yours — or build one for your entire company.
 
 ## How It Works
 
