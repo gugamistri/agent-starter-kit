@@ -1,8 +1,8 @@
 ---
 shortDescription: Session startup — gitignore, auto-update, memory, rules, context, CLI config, and greet.
 usedBy: [maestro]
-version: 0.4.2
-lastUpdated: 2026-04-25
+version: 0.4.3
+lastUpdated: 2026-05-01
 ---
 
 ## Purpose
@@ -19,7 +19,7 @@ All framework files live under `.agents/`. Markdown references within the framew
 
    ```bash
    touch .gitignore
-   for entry in '.agents/' '.memory/' 'opencode.json'; do
+   for entry in '.agents/' '.memory/' 'opencode.json' '.ignore'; do
        grep -qxF "$entry" .gitignore || echo "$entry" >> .gitignore
    done
    ```
