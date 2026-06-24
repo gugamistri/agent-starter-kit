@@ -11,8 +11,8 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.5.5
-# @updated      2026-04-30
+# @version      0.6.2
+# @updated      2026-06-17
 set -euo pipefail
 
 checkRequiredDependencies() {
@@ -285,19 +285,33 @@ applyPermissionProfile() {
       "ls *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "cat *": "allow",
       "head *": "allow",
       "tail *": "allow",
       "wc *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
       "stat *": "allow",
       "diff *": "allow",
       "tree *": "allow",
       "read *": "allow",
       "git *": "allow",
-      "mkdir *": "allow"
+      "mkdir *": "allow",
+      "touch *": "allow",
+      "cp *": "allow",
+      "mv *": "allow",
+      "tee *": "allow",
+      "xargs *": "allow",
+      "ln *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -308,6 +322,8 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -318,6 +334,13 @@ applyPermissionProfile() {
   "permission": {
     "bash": {
       "*": "deny",
+      "sed -i *": "deny",
+      "cp *": "deny",
+      "mv *": "deny",
+      "touch *": "deny",
+      "tee *": "deny",
+      "xargs *": "deny",
+      "ln *": "deny",
       "rm *": "deny",
       "mkfs *": "deny",
       "dd *": "deny",
@@ -346,10 +369,17 @@ applyPermissionProfile() {
       "ls *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "cat *": "allow",
       "head *": "allow",
       "tail *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
+      "wc *": "allow",
       "tree *": "allow",
       "read *": "allow",
       "git status *": "allow",
@@ -366,6 +396,8 @@ applyPermissionProfile() {
       "stat *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -374,6 +406,8 @@ applyPermissionProfile() {
       "*": "allow"
     },
     "external_directory": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -413,11 +447,17 @@ applyPermissionProfile() {
       "ls *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "cat *": "allow",
       "head *": "allow",
       "tail *": "allow",
       "wc *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
       "stat *": "allow",
       "tree *": "allow",
       "read *": "allow",
@@ -431,7 +471,13 @@ applyPermissionProfile() {
       "git ls-files *": "allow",
       "git blame *": "allow",
       "git merge-base *": "allow",
-      "git describe *": "allow"
+      "git describe *": "allow",
+      "touch *": "allow",
+      "cp *": "allow",
+      "mv *": "allow",
+      "tee *": "allow",
+      "xargs *": "allow",
+      "ln *": "allow"
     },
     "edit": {
       "*": "allow"
@@ -442,6 +488,8 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -452,6 +500,13 @@ applyPermissionProfile() {
   "permission": {
     "bash": {
       "*": "ask",
+      "sed -i *": "deny",
+      "cp *": "deny",
+      "mv *": "deny",
+      "touch *": "deny",
+      "tee *": "deny",
+      "xargs *": "deny",
+      "ln *": "deny",
       "rm *": "deny",
       "mkfs *": "deny",
       "dd *": "deny",
@@ -480,10 +535,17 @@ applyPermissionProfile() {
       "ls *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "cat *": "allow",
       "head *": "allow",
       "tail *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
+      "wc *": "allow",
       "tree *": "allow",
       "read *": "allow",
       "git status *": "allow",
@@ -500,6 +562,8 @@ applyPermissionProfile() {
       "stat *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -508,6 +572,8 @@ applyPermissionProfile() {
       "*": "allow"
     },
     "external_directory": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -545,6 +611,7 @@ applyPermissionProfile() {
       "test *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "ls *": "allow",
       "cat *": "allow",
       "read *": "allow",
@@ -552,12 +619,25 @@ applyPermissionProfile() {
       "tail *": "allow",
       "wc *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
       "tree *": "allow",
       "stat *": "allow",
       "file *": "allow",
-      "mkdir *": "allow"
+      "mkdir *": "allow",
+      "touch *": "allow",
+      "cp *": "allow",
+      "mv *": "allow",
+      "tee *": "allow",
+      "xargs *": "allow",
+      "ln *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -568,6 +648,8 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
+      ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
   }

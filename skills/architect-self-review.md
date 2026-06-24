@@ -1,8 +1,8 @@
 ---
 shortDescription: Deterministic self-evaluation rubric for Architect — scored every run using the DRAFT framework.
 usedBy: [architect]
-version: 0.1.0
-lastUpdated: 2026-04-24
+version: 0.1.1
+lastUpdated: 2026-06-18
 ---
 
 ## Purpose
@@ -53,11 +53,11 @@ _Are criteria defined, measurable, and mapped to phases?_
 
 ### F — FILES
 
-_Do all referenced paths exist or have valid parents, are entities verified, and are phase dependencies acyclic?_
+_Do all referenced paths exist or have valid parents, are entities verified, are phase dependencies acyclic, and do phases respect LOC limits?_
 
-- **0** — Plan references files or entities that do not exist without verification. Phase dependency chain has a cycle or a missing link. Layer boundary violations present (inner layer depends on outer).
-- **1** — All file references verified, but phase ordering is missing explicit dependency declarations. One or more entities mentioned but not confirmed in the codebase.
-- **2** — Every existing file path confirmed with `test -f`. Every new file's parent directory confirmed. Every named entity (function, type, endpoint) searched in codebase and confirmed or marked "to create." Phase dependency chain is acyclic and every dependency is declared. Layer boundaries respected per architecture skills. No strikethroughs, "Revised:" annotations, "no longer" phrasing, or diff-style markers left in the plan.
+- **0** — Plan references files or entities that do not exist without verification. Phase dependency chain has a cycle or a missing link. Layer boundary violations present (inner layer depends on outer). Any phase exceeds 800 LOC.
+- **1** — All file references verified, but phase ordering is missing explicit dependency declarations. One or more entities mentioned but not confirmed in the codebase. One or more phases exceed 600 LOC but none exceed 800 LOC.
+- **2** — Every existing file path confirmed with `test -f`. Every new file's parent directory confirmed. Every named entity (function, type, endpoint) searched in codebase and confirmed or marked "to create." Phase dependency chain is acyclic and every dependency is declared. Layer boundaries respected per architecture skills. No strikethroughs, "Revised:" annotations, "no longer" phrasing, or diff-style markers left in the plan. All phases are at or below 600 LOC.
 
 ### T — TESTS
 

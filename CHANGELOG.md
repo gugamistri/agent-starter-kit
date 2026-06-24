@@ -1,6 +1,41 @@
 # Changelog
 
 ```log
+0.7.3 - 2026/06/18
+refactor(architect): reduce per-phase LOC target from 1000 to 600 with 800 hard cap — aligns with Standard review tier threshold, reduces need for Full tier reviews
+feat(review): update adversarial review phase size threshold from 1000 to 800 LOC — enforces new per-phase hard cap
+feat(review): add LOC threshold to DRAFT self-review — F criterion now checks phase LOC against 600 soft cap and 800 hard cap
+fix(review): use `git diff HEAD` instead of `git diff` for LOC measurement — captures both staged and unstaged changes, prevents staged work from bypassing review
+
+0.7.2 - 2026/06/18
+fix(coder): make style absorption deterministic — run `ls` on target directory, read exactly two sibling files most similar in function, match structure/patterns/conventions exactly
+feat(rules): add native tooling rule — coders should use Edit/Read/Write/Grep/Glob directly, not write scripts for file operations
+feat(review): add style proximity verification — reviewer reads sibling files and compares against changed code before checking rules, project style takes precedence
+refactor(review): restructure code-quality-review around progress file breadcrumbs — phases tracked in `.memory/reviews/`, findings written incrementally, style proximity after rule walk (context window management), dedup final step
+refactor(review): lower review tier LOC thresholds — Unified <300, Standard 300-600, Full 600-1000, over 1000 must split via Contextualizer
+
+0.7.1 - 2026/06/17
+fix(configure-cli): add .memory/* alongside .memory/**/* in edit and external_directory for all personas — glob ** may not match direct children of .memory/; files like settings.conf and MEMORY.md were falling through to wildcard ask/deny
+feat(rules): add method granularity rule — trivial wrapper functions (~5 LOC or fewer) are indirection without value; functions must do meaningful work
+feat(rules): add method ordering rule — callees must be defined above callers for top-down readability
+feat(rules): clarify data trust boundary — no separate parse functions when value object constructor already validates
+fix(configure-cli): add rg (ripgrep) to bash allow list for all personas — file search is a read operation, same category as grep
+
+0.7.0 - 2026/06/17
+feat(configure-cli): add text processing and file manipulation utils to persona bash allow lists — sed, awk, tr, cut, uniq, wc on all profiles; touch, cp, mv, tee, xargs, ln on write-enabled personas
+fix(configure-cli): add deny guards for read-only personas — sed -i and file manipulation tools explicitly denied on architect and reviewer to prevent bypassing edit permissions
+fix(tests): update stale test assertions for permission defaults and model version checks
+
+0.6.5 - 2026/06/16
+fix(configure-cli): add .memory/**/* to edit and external_directory for build, architect, reviewer, and contextualizer — syncs .memory permissions with main framework; sub-agents can now write to .memory without prompting
+
+0.6.4 - 2026/06/15
+refactor(architect): reduce per-phase LOC target from 1500 to 1000 — smaller phases reduce cognitive burden and review complexity
+feat(review): add phase dependency and size checklists to adversarial plan review — enforces 1000 LOC limit per phase, flags missing estimates as Blockers
+
+0.6.3 - 2026/06/15
+feat(architect): version plan files — each revision produces a new file (YYYY-MM-DD-<prefix>-<slug>-v<N>.md) instead of overwriting; first version is v0
+
 0.6.2 - 2026/05/01
 fix(skills/boot.md): add `.ignore` to gitignore loop — was missing `.ignore` entry that maestro-boot.sh already handles
 
