@@ -1,6 +1,55 @@
 # Changelog
 
 ```log
+0.8.5 - 2026/06/24
+fix(configure-cli): robotic humor thinking budget 0→4096 — thinking re-enabled with minimal budget instead of disabled; reasoning effort mapped to low instead of none
+fix(configure-cli): introvert thinking budget 10240→8192 — aligned with industry effort-level estimates for hard tasks
+feat(configure-cli): vary top_p by humor — robotic 0.7, introvert 0.75, pragmatic 0.8, sympathetic 0.85, extrovert 0.85; deterministic roles get lower top_p for code precision, exploratory roles keep higher for design flexibility
+feat(configure-cli): block destructive git commands on all personas — git clean, git reset, git rebase, git push --force, git push -f explicitly denied in bash permission profiles for all personas; prevents accidental history rewrites, untracked file deletion, and force pushes
+refactor(personas): bump coder modelTier from tier-1 to tier-2 — fast model with no thinking insufficient for coding tasks that require reasoning about context, dependencies, and test design
+
+0.8.4 - 2026/06/24
+fix(self-review): adapt SHIELD dimensions for all pass types — S-dimension simplified, H-dimension generalized, E/L/D dimensions made pass-agnostic (grounding, evidence, external factors) instead of pass-specific; all dimensions now work for both full and focused reviews
+
+0.8.3 - 2026/06/24
+fix(self-review): SHIELD S-dimension handles focused reviews — rubric now explicitly scores based on required passes (focused pass only when task specifies focus, all three when no focus); eliminates ambiguity in scoring when task scopes to single pass
+
+0.8.2 - 2026/06/24
+fix(reviewer): restructure playbook for progress file discipline — step 3 reads skill(s) in full before proceeding, step 4 initializes progress files, step 5 executes each phase thoroughly with calming guidance; Identity adds depth-over-completeness principle; Red Line enforces progress file timing
+
+0.8.1 - 2026/06/24
+refactor(personas): align identities with main framework — all 5 persona identities trimmed to single paragraphs; operational guidance moved to Playbook/Red Lines, only character and principles remain
+
+0.8.0 - 2026/06/24
+refactor(reviewer): safety net identity — removed "three critics" framing; Reviewer is now the safety net that catches what was dropped, runs all three lenses (coherence, quality, security)
+refactor(reviewer): trimmed Red Lines to persona-specific only — removed process-related prohibitions already covered by review skills and SHIELD rubric
+refactor(review-loop): restore multi-dispatch tiers with <task> focus — Standard (2 dispatches) and Full (3 dispatches) tiers restored for MoE context window management; focus now stated in <task> itself, no separate `<review-focus>` block
+refactor(self-review): remove `<review-focus>` references — SHIELD rubric updated for task-driven focus
+
+0.7.9 - 2026/06/23
+refactor(configure-cli): improve agentBindingBuilder() readability — eliminated nested if/else, consolidated jq calls into linear flow with separate conditionals for temperature, top_p, and thinking; each step builds on previous result for clear data flow
+feat(configure-cli): emit reasoningEffort alongside reasoning.effort — flat `reasoningEffort` field added for opencode pass-through compatibility per docs (https://opencode.ai/docs/agents/#additional); both nested and flat formats emitted for max provider compatibility
+
+0.7.8 - 2026/06/23
+feat(configure-cli): dual-format thinking config — agent bindings emit both Anthropic (`thinking: {type, budgetTokens}`) and OpenAI (`reasoning: {effort}`) formats; disable works universally across SDKs
+fix(configure-cli): replace enable_thinking with proper thinking/reasoning formats — `enable_thinking` was wrong parameter for both Anthropic and OpenAI SDK providers
+
+0.7.7 - 2026/06/23
+feat(personas): add Observations convention — dispatch notes instruct all personas to optionally include a `## Observations` section in their handoff for honest opinions, concerns, or patterns outside their deliverable; Maestro scans and saves to long-term memory, feeds relevant observations into subsequent dispatch context
+feat(memory): add Observations section to long-term memory schema — dedicated section for persona specialist feedback that falls outside deliverables but may matter later
+refactor(contextualizer): humor changed from introvert to robotic — thinking disabled, same temperature/topP as introvert (0.2/0.85)
+
+0.7.6 - 2026/06/23
+fix(memory): pre-create all .memory subdirectories in agent-memory skill — plan/, todo/, reviews/ added alongside session/; prevents failures when architect, task-tracking, or code-quality-review skills write before dirs exist
+
+0.7.5 - 2026/06/22
+fix(configure-cli): simplify .memory permissions to single glob pattern — `.memory/*` and `.memory/**/*` replaced with `.memory/**` for consistent matching; prevents permission prompts for build agent editing .memory/ files
+fix(configure-cli): replace jq deep merge with shallow merge — `*` operator preserved stale budgetTokens when thinking disabled; `+` replaces agent objects entirely so disabled thinking has no budget field
+
+0.7.4 - 2026/06/22
+feat(configure-cli): add robotic humor — same temperature/topP as introvert (0.2/0.85) but thinking explicitly disabled; agentBindingBuilder handles "disabled" string for thinkingBudget
+refactor(coder): tier-2 to tier-1, pragmatic to robotic — fast model with no thinking for explicit linear playbooks
+
 0.7.3 - 2026/06/18
 refactor(architect): reduce per-phase LOC target from 1000 to 600 with 800 hard cap — aligns with Standard review tier threshold, reduces need for Full tier reviews
 feat(review): update adversarial review phase size threshold from 1000 to 800 LOC — enforces new per-phase hard cap

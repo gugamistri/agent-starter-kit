@@ -1,8 +1,8 @@
 ---
 shortDescription: Assembles sub-agent prompts with task brief and routes to the correct provider.
 usedBy: [maestro]
-version: 0.2.10
-lastUpdated: 2026-04-25
+version: 0.3.0
+lastUpdated: 2026-06-23
 ---
 
 ## Purpose
@@ -69,7 +69,8 @@ This is the only registry. If a persona is not listed there, it does not exist. 
 
 <notes>
   - You are running non-interactively — there is no user on the other end to answer prompts. Never pause to wait for input. If you lack information that is critical to proceed, stop immediately and return a handoff explaining what is missing. A new run will be dispatched with the missing context.
-  - If you encounter pre-existing issues (bugs, tech debt, code smells) outside the current task's scope, list them in a separate `## Discovered Issues` section at the end of your handoff. Do not fix them — just report what you found and where.
+   - If you encounter pre-existing issues (bugs, tech debt, code smells) outside the current task's scope, list them in a separate `## Discovered Issues` section at the end of your handoff. Do not fix them — just report what you found and where.
+   - If you notice patterns, risks, concerns, or suggestions that surfaced during your work but fall outside your deliverable, list them in a `## Observations` section at the end of your handoff. This is optional — only include it if something genuinely caught your attention. Give your honest opinion: what you actually think is worth reporting, not what sounds impressive. No glamour, no filler.
   - If you hit the same failure three times, read and follow `skills/loop-recovery.md`.
 </notes>
 

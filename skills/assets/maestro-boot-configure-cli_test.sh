@@ -4,8 +4,8 @@
 # @usage        maestro-boot-configure-cli_test.sh
 # @output       PASS/FAIL per test case, summary at end.
 # @requires     bash v4+, yq v4+, jq v1.6+
-# @version      0.1.0
-# @updated      2026-06-17
+# @version      0.1.5
+# @updated      2026-06-24
 set -euo pipefail
 
 scriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -188,7 +188,7 @@ EOF
 }
 
 runThinkingBudgetVerificationCases() {
-  local testDir introvertBudget pragmaticBudget sympatheticBudget extrovertBudget defaultBudget
+  local testDir introvertBudget pragmaticBudget sympatheticBudget extrovertBudget roboticType defaultBudget
   testDir=$(mktemp -d -p "$fixtureDir")
   mkdir -p "$testDir/.agents/personas"
   cat > "$testDir/.agents/personas/introvert.md" <<'EOF'
@@ -223,6 +223,14 @@ humor: extrovert
 ---
 Outgoing persona.
 EOF
+  cat > "$testDir/.agents/personas/robotic.md" <<'EOF'
+---
+preferredModel: qwen
+modelTier: tier-2
+humor: robotic
+---
+Mechanical persona.
+EOF
   cat > "$testDir/.agents/personas/default.md" <<'EOF'
 ---
 preferredModel: qwen
@@ -237,63 +245,88 @@ EOF
   cd "$testDir" && bash "$configureScript" 2>&1 || true
 
   introvertBudget=$(jq -r '.agent.introvert.thinking.budgetTokens // "missing"' "$testDir/opencode.json")
-  if [[ "$introvertBudget" != "10240" ]]; then
+  introvertEffort=$(jq -r '.agent.introvert.reasoning.effort // "missing"' "$testDir/opencode.json")
+  introvertReasoningEffort=$(jq -r '.agent.introvert.reasoningEffort // "missing"' "$testDir/opencode.json")
+  if [[ "$introvertBudget" != "8192" || "$introvertEffort" != "low" || "$introvertReasoningEffort" != "low" ]]; then
     cat <<EOF
-FAIL introvert thinking budget is 10240
-  expected 10240, got: $introvertBudget
+FAIL introvert thinking budget=8192 effort=low reasoningEffort=low
+  expected budget=8192 effort=low reasoningEffort=low, got: budget=$introvertBudget effort=$introvertEffort reasoningEffort=$introvertReasoningEffort
 EOF
     failCount=$((failCount + 1))
     return
   fi
-  echo "PASS introvert thinking budget is 10240"
+  echo "PASS introvert thinking budget=8192 effort=low reasoningEffort=low"
   passCount=$((passCount + 1))
 
   pragmaticBudget=$(jq -r '.agent.pragmatic.thinking.budgetTokens // "missing"' "$testDir/opencode.json")
-  if [[ "$pragmaticBudget" != "12288" ]]; then
+  pragmaticEffort=$(jq -r '.agent.pragmatic.reasoning.effort // "missing"' "$testDir/opencode.json")
+  pragmaticReasoningEffort=$(jq -r '.agent.pragmatic.reasoningEffort // "missing"' "$testDir/opencode.json")
+  if [[ "$pragmaticBudget" != "12288" || "$pragmaticEffort" != "medium" || "$pragmaticReasoningEffort" != "medium" ]]; then
     cat <<EOF
-FAIL pragmatic thinking budget is 12288
-  expected 12288, got: $pragmaticBudget
+FAIL pragmatic thinking budget=12288 effort=medium reasoningEffort=medium
+  expected budget=12288 effort=medium reasoningEffort=medium, got: budget=$pragmaticBudget effort=$pragmaticEffort reasoningEffort=$pragmaticReasoningEffort
 EOF
     failCount=$((failCount + 1))
     return
   fi
-  echo "PASS pragmatic thinking budget is 12288"
+  echo "PASS pragmatic thinking budget=12288 effort=medium reasoningEffort=medium"
   passCount=$((passCount + 1))
 
   sympatheticBudget=$(jq -r '.agent.sympathetic.thinking.budgetTokens // "missing"' "$testDir/opencode.json")
-  if [[ "$sympatheticBudget" != "14336" ]]; then
+  sympatheticEffort=$(jq -r '.agent.sympathetic.reasoning.effort // "missing"' "$testDir/opencode.json")
+  sympatheticReasoningEffort=$(jq -r '.agent.sympathetic.reasoningEffort // "missing"' "$testDir/opencode.json")
+  if [[ "$sympatheticBudget" != "14336" || "$sympatheticEffort" != "high" || "$sympatheticReasoningEffort" != "high" ]]; then
     cat <<EOF
-FAIL sympathetic thinking budget is 14336
-  expected 14336, got: $sympatheticBudget
+FAIL sympathetic thinking budget=14336 effort=high reasoningEffort=high
+  expected budget=14336 effort=high reasoningEffort=high, got: budget=$sympatheticBudget effort=$sympatheticEffort reasoningEffort=$sympatheticReasoningEffort
 EOF
     failCount=$((failCount + 1))
     return
   fi
-  echo "PASS sympathetic thinking budget is 14336"
+  echo "PASS sympathetic thinking budget=14336 effort=high reasoningEffort=high"
   passCount=$((passCount + 1))
 
   extrovertBudget=$(jq -r '.agent.extrovert.thinking.budgetTokens // "missing"' "$testDir/opencode.json")
-  if [[ "$extrovertBudget" != "16384" ]]; then
+  extrovertEffort=$(jq -r '.agent.extrovert.reasoning.effort // "missing"' "$testDir/opencode.json")
+  extrovertReasoningEffort=$(jq -r '.agent.extrovert.reasoningEffort // "missing"' "$testDir/opencode.json")
+  if [[ "$extrovertBudget" != "16384" || "$extrovertEffort" != "xhigh" || "$extrovertReasoningEffort" != "xhigh" ]]; then
     cat <<EOF
-FAIL extrovert thinking budget is 16384
-  expected 16384, got: $extrovertBudget
+FAIL extrovert thinking budget=16384 effort=xhigh reasoningEffort=xhigh
+  expected budget=16384 effort=xhigh reasoningEffort=xhigh, got: budget=$extrovertBudget effort=$extrovertEffort reasoningEffort=$extrovertReasoningEffort
 EOF
     failCount=$((failCount + 1))
     return
   fi
-  echo "PASS extrovert thinking budget is 16384"
+  echo "PASS extrovert thinking budget=16384 effort=xhigh reasoningEffort=xhigh"
+  passCount=$((passCount + 1))
+
+  roboticType=$(jq -r '.agent.robotic.thinking.type // "missing"' "$testDir/opencode.json")
+  roboticBudget=$(jq '.agent.robotic.thinking.budgetTokens // "missing"' "$testDir/opencode.json")
+  roboticEffort=$(jq -r '.agent.robotic.reasoning.effort // "missing"' "$testDir/opencode.json")
+  roboticReasoningEffort=$(jq -r '.agent.robotic.reasoningEffort // "missing"' "$testDir/opencode.json")
+  if [[ "$roboticType" != "enabled" || "$roboticBudget" != "4096" || "$roboticEffort" != "low" || "$roboticReasoningEffort" != "low" ]]; then
+    cat <<EOF
+ FAIL robotic thinking type=enabled budgetTokens=4096 effort=low reasoningEffort=low
+   expected type=enabled budgetTokens=4096 effort=low reasoningEffort=low, got: type=$roboticType budget=$roboticBudget effort=$roboticEffort reasoningEffort=$roboticReasoningEffort
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS robotic thinking type=enabled budgetTokens=4096 effort=low reasoningEffort=low"
   passCount=$((passCount + 1))
 
   defaultBudget=$(jq -r '.agent.default.thinking.budgetTokens // "absent"' "$testDir/opencode.json")
-  if [[ "$defaultBudget" != "absent" ]]; then
+  defaultReasoning=$(jq -r '.agent.default.reasoning.effort // "absent"' "$testDir/opencode.json")
+  defaultReasoningEffort=$(jq -r '.agent.default.reasoningEffort // "absent"' "$testDir/opencode.json")
+  if [[ "$defaultBudget" != "absent" || "$defaultReasoning" != "absent" || "$defaultReasoningEffort" != "absent" ]]; then
     cat <<EOF
-FAIL default persona has no thinking budget
-  expected thinking field to be absent, got: $defaultBudget
+FAIL default persona has no thinking/reasoning/reasoningEffort fields
+  expected all absent, got: budget=$defaultBudget effort=$defaultReasoning reasoningEffort=$defaultReasoningEffort
 EOF
     failCount=$((failCount + 1))
     return
   fi
-  echo "PASS default persona has no thinking budget"
+  echo "PASS default persona has no thinking/reasoning/reasoningEffort fields"
   passCount=$((passCount + 1))
 }
 
@@ -351,6 +384,54 @@ EOF
     return
   fi
   echo "PASS reviewer agent has permission.bash.* = ask"
+  passCount=$((passCount + 1))
+
+  coderGitCleanDeny=$(jq -r '.agent.coder.permission.bash["git clean *"] // "missing"' "$testDir/opencode.json")
+  if [[ "$coderGitCleanDeny" != "deny" ]]; then
+    cat <<EOF
+FAIL coder agent has permission.bash git clean * = deny
+  expected deny, got: $coderGitCleanDeny
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS coder agent has permission.bash git clean * = deny"
+  passCount=$((passCount + 1))
+
+  reviewerGitCleanDeny=$(jq -r '.agent.reviewer.permission.bash["git clean *"] // "missing"' "$testDir/opencode.json")
+  if [[ "$reviewerGitCleanDeny" != "deny" ]]; then
+    cat <<EOF
+FAIL reviewer agent has permission.bash git clean * = deny
+  expected deny, got: $reviewerGitCleanDeny
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS reviewer agent has permission.bash git clean * = deny"
+  passCount=$((passCount + 1))
+
+  coderGitResetDeny=$(jq -r '.agent.coder.permission.bash["git reset *"] // "missing"' "$testDir/opencode.json")
+  if [[ "$coderGitResetDeny" != "deny" ]]; then
+    cat <<EOF
+FAIL coder agent has permission.bash git reset * = deny
+  expected deny, got: $coderGitResetDeny
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS coder agent has permission.bash git reset * = deny"
+  passCount=$((passCount + 1))
+
+  coderGitRebaseDeny=$(jq -r '.agent.coder.permission.bash["git rebase *"] // "missing"' "$testDir/opencode.json")
+  if [[ "$coderGitRebaseDeny" != "deny" ]]; then
+    cat <<EOF
+FAIL coder agent has permission.bash git rebase * = deny
+  expected deny, got: $coderGitRebaseDeny
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS coder agent has permission.bash git rebase * = deny"
   passCount=$((passCount + 1))
 }
 
