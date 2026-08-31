@@ -11,8 +11,8 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.6.12
-# @updated      2026-06-24
+# @version      0.6.14
+# @updated      2026-07-09
 #
 # ── Thinking/Reasoning Configuration ─────────────────────────────────────────
 #
@@ -343,6 +343,11 @@ applyPermissionProfile() {
       "tree *": "allow",
       "read *": "allow",
       "git *": "allow",
+      "go test *": "allow",
+      "go build *": "allow",
+      "go vet *": "allow",
+      "gofmt *": "allow",
+      "go mod tidy *": "allow",
       "mkdir *": "allow",
       "touch *": "allow",
       "cp *": "allow",
@@ -354,6 +359,10 @@ applyPermissionProfile() {
     "edit": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -366,6 +375,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -396,6 +409,13 @@ applyPermissionProfile() {
       "git rebase *": "deny",
       "git push --force *": "deny",
       "git push -f *": "deny",
+      "git stash *": "deny",
+      "git checkout -- *": "deny",
+      "git restore *": "deny",
+      "git filter-branch *": "deny",
+      "git cherry-pick *": "deny",
+      "git worktree *": "deny",
+      "git reflog expire *": "deny",
       "yq *": "allow",
       "jq *": "allow",
       "mktemp *": "allow",
@@ -440,11 +460,16 @@ applyPermissionProfile() {
       "git merge-base *": "allow",
       "git describe *": "allow",
       "diff *": "allow",
-      "stat *": "allow"
+      "stat *": "allow",
+      "mkdir *": "allow"
     },
     "edit": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -455,6 +480,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -478,6 +507,13 @@ applyPermissionProfile() {
       "git rebase *": "deny",
       "git push --force *": "deny",
       "git push -f *": "deny",
+      "git stash *": "deny",
+      "git checkout -- *": "deny",
+      "git restore *": "deny",
+      "git filter-branch *": "deny",
+      "git cherry-pick *": "deny",
+      "git worktree *": "deny",
+      "git reflog expire *": "deny",
       "mkdir *": "allow",
       "yq *": "allow",
       "jq *": "allow",
@@ -524,6 +560,19 @@ applyPermissionProfile() {
       "git blame *": "allow",
       "git merge-base *": "allow",
       "git describe *": "allow",
+      "go vet *": "allow",
+      "go build *": "allow",
+      "go test *": "allow",
+      "go run *": "allow",
+      "go fmt *": "allow",
+      "gofmt *": "allow",
+      "go list *": "allow",
+      "go doc *": "allow",
+      "go version *": "allow",
+      "go env *": "allow",
+      "go mod tidy *": "allow",
+      "go mod download *": "allow",
+      "go mod verify *": "allow",
       "touch *": "allow",
       "cp *": "allow",
       "mv *": "allow",
@@ -542,6 +591,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -572,6 +625,13 @@ applyPermissionProfile() {
       "git rebase *": "deny",
       "git push --force *": "deny",
       "git push -f *": "deny",
+      "git stash *": "deny",
+      "git checkout -- *": "deny",
+      "git restore *": "deny",
+      "git filter-branch *": "deny",
+      "git cherry-pick *": "deny",
+      "git worktree *": "deny",
+      "git reflog expire *": "deny",
       "yq *": "allow",
       "jq *": "allow",
       "mktemp *": "allow",
@@ -615,12 +675,26 @@ applyPermissionProfile() {
       "git blame *": "allow",
       "git merge-base *": "allow",
       "git describe *": "allow",
+      "go vet *": "allow",
+      "go build *": "allow",
+      "go test *": "allow",
+      "go list *": "allow",
+      "go doc *": "allow",
+      "go version *": "allow",
+      "go env *": "allow",
+      "gofmt *": "allow",
+      "go fmt *": "allow",
       "diff *": "allow",
-      "stat *": "allow"
+      "stat *": "allow",
+      "mkdir *": "allow"
     },
     "edit": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -631,6 +705,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -654,6 +732,13 @@ applyPermissionProfile() {
       "git rebase *": "deny",
       "git push --force *": "deny",
       "git push -f *": "deny",
+      "git stash *": "deny",
+      "git checkout -- *": "deny",
+      "git restore *": "deny",
+      "git filter-branch *": "deny",
+      "git cherry-pick *": "deny",
+      "git worktree *": "deny",
+      "git reflog expire *": "deny",
       "yq *": "allow",
       "jq *": "allow",
       "mktemp *": "allow",
@@ -700,6 +785,10 @@ applyPermissionProfile() {
     "edit": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -712,6 +801,10 @@ applyPermissionProfile() {
     "external_directory": {
       ".memory/*": "allow",
       ".memory/**": "allow",
+      ".memory/plan/*": "allow",
+      ".memory/todo/*": "allow",
+      ".memory/reviews/*": "allow",
+      ".memory/session/*": "allow",
       "/tmp/*": "allow"
     }
   }

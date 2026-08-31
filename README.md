@@ -1,10 +1,10 @@
 # Agent Starter Kit
 
-> Describe what you need in plain language. The Maestro agent breaks it into tasks and routes each one to a specialized AI model.
+> Describe what you need in plain language. Work directly in quick mode, or boot the Maestro to break complex tasks into specialized sub-agent work.
 
 Agent Starter Kit is a Natural Language AI Harness (NLAH) — multi-model, pure Markdown, zero dependencies. The smartest model orchestrates while cheaper, faster ones handle the routine work — extending your premium coding plan (such as Claude Code) instead of burning it on everything.
 
-It's model-agnostic: orchestrate on Claude, plan on Kimi, review on Qwen, or any combination you choose.
+It's model-agnostic: orchestrate on Claude, plan on Gemini, review on DeepSeek — or any combination you choose.
 
 ![Boot sequence demo](docs/demo.jpg)
 _Maestro booted on a Clean Architecture Go project — gitignore, auto-update, memory, rules, and 33 context files created automatically._
@@ -28,12 +28,14 @@ The framework **learns as it works**. Corrections, preferences, and lessons are 
 
 ## Setup
 
-1. Clone into `.agents/` inside your project:
+1. Clone into `.agents/` inside your software project:
 
    ```bash
    cd /path/to/your/project
    git clone git@github.com:ntorga/agent-starter-kit.git .agents
    ```
+
+The `.agents/` directory lives inside your project — it's not a plugin you install once. Each project gets its own copy of the framework.
 
 2. Symlink the entry file to the project root:
 
@@ -41,10 +43,18 @@ The framework **learns as it works**. Corrections, preferences, and lessons are 
    ln -s .agents/AGENTS.md AGENTS.md
    ```
 
-3. Start the AI agent (e.g., `claude`, or whatever CLI you use).
-4. Say **"Please comply with AGENTS.md."** — this boots the Maestro and loads the framework.
-5. The Maestro orchestrates everything. On first run, it automatically dispatches the Contextualizer to map the codebase.
-6. (Optional) Customize — add personas, rules, skills, and providers to fit your project (see Customization below).
+3. Start the AI agent interface (e.g., `claude`, `opencode` or whatever CLI/TUI you use).
+4. As the first message of every session, choose a mode:
+   - **Full orchestration:** boot the Maestro to decompose, plan, dispatch, and review multi-step work:
+
+     ```
+     Please comply with @.agents/ENTRYPOINT.md file.
+     ```
+
+   - **Quick work (default):** just type your request. The CLI auto-loads `AGENTS.md` — your style book is already in context. No boot phrase needed.
+5. Describe what you want to build, fix, or change. In full orchestration mode, the Maestro breaks it down, dispatches to specialized personas (Architect plans, Coder implements, Reviewer validates), and delivers the result.
+6. On first run in full orchestration mode, the Maestro automatically dispatches the Contextualizer to map the codebase before doing anything else.
+7. (Optional) Customize — add personas, rules, skills, and providers to fit your project (see Customization below).
 
 ### OpenCode Configuration
 
@@ -62,15 +72,9 @@ If the tools aren't installed or you're using a different CLI, the script exits 
 
 ```
 personas/    Specialized AI roles (who does the work)
-rules/       Constraints organized by authority level
+rules/       Constraints
 skills/      Reusable procedures and protocols
 ```
-
-## Rules Hierarchy
-
-- **Commandments** — absolute, never bypassed
-- **Edicts** — authoritative within scope, not bent
-- **Counsel** — wise guidance, may be deviated from with justification
 
 ## Skills
 
@@ -79,7 +83,7 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 - **agent-decision** — persona decision-making framework with self-review rubrics
 - **agent-memory** — long-term and session memory across sessions
 - **architect-self-review** — DRAFT self-review rubric — plan quality gate
-- **boot** — session startup sequence
+- **boot** — session startup sequence (full boot for complex features)
 - **code-coherence-review** — logic coherence, correctness, and structural integrity checks
 - **code-quality-review** — rules-walk procedure for coding standards compliance
 - **code-sec-review** — OWASP-aligned security code review checklist
@@ -96,11 +100,12 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 
 ## Customization
 
-- **Dispatch** — edit `skills/dispatch.md` to match your CLI agents. The Providers list and CLI Dispatch section are pre-configured for Claude Code, Codex, Cursor, DeepSeek, Gemini, and Qwen. Add entries for any other provider/model you use.
+- **Dispatch** — edit `skills/dispatch.md` to customize providers. The Providers list is pre-configured with one entry per CLI. Each persona defaults to `host`, which uses whatever model your CLI provides — no configuration needed.
 - Add new personas to `personas/` following the schema in `personas/README.md`
-- Add rules to `rules/commandments/`, `rules/edicts/`, or `rules/counsel/`
+- Add rules to `rules/`
 - Add skills to `skills/` following the schema in `skills/README.md`
 - Modify existing files to match your project's needs
+- **AGENTS.md** — edit to add your project's coding conventions, language-specific rules, or personal preferences. This file loads automatically in quick mode, so anything you add here shapes every session without booting the Maestro.
 
 Each directory has a README with the full schema definition.
 
@@ -114,6 +119,14 @@ Most harnesses are built around dense, expensive models and burn thousands of to
 
 *\* Almost — one optional shell script for OpenCode auto-configuration and a YAML provider list in `skills/dispatch.md`. No runtimes, no dependencies, no build steps.*
 
+### Full orchestration or quick mode — which do I use?
+
+**Full orchestration** boots the Maestro — an orchestrator that decomposes your request, plans with the Architect, dispatches to the Coder, validates with the Reviewer, and maps the codebase with the Contextualizer. It carries memory across sessions, tracks work in to-do files, and manages a review pipeline. Use it for complex multi-step work where you want structured planning, adversarial review, or cross-session memory.
+
+**Quick mode** is the default. Just type your request and the CLI works on it directly — your `AGENTS.md` style book is auto-loaded so the agent follows your coding conventions without any boot ceremony. Use it for everyday work: bug fixes, features, refactors, anything where you know what you want and just need it done.
+
+The trade-off is speed vs. structure. Quick mode is faster and cheaper — one agent, no overhead. Full orchestration is more thorough — multiple specialized agents, review gates, and resumable state — but costs more tokens and requires a boot phrase each session.
+
 ### Why multi-model?
 
 Coding plans are routinely quantized and rate-limited weeks after launch — the version you fell in love with gradually loses sharpness as the provider optimizes for throughput. A multi-model harness fights this in three ways:
@@ -124,11 +137,11 @@ Coding plans are routinely quantized and rate-limited weeks after launch — the
 
 ### What do I need to run this?
 
-A coding plan or API key for each provider you route to. We recommend coding plans — **Claude Code** (Anthropic), **Codex** (OpenAI), and **Alibaba Model Studio** (Qwen) offer flat-rate pricing with generous token allowances designed for agentic workflows. API keys work too, but plans are more cost-effective for sustained use. Each provider needs its CLI tool installed (e.g., `claude` for Claude Code, `codex` for Codex, `opencode` for DeepSeek or Qwen). If you only route to one provider, one plan is enough.
+A coding plan or API key for each provider you route to. We recommend coding plans — **Claude Code** (Anthropic), **Codex** (OpenAI), and **OpenCode Go** (DeepSeek, Qwen, Kimi, GLM, and more via the `opencode` CLI) offer flat-rate pricing with generous token allowances designed for agentic workflows. API keys work too, but plans are more cost-effective for sustained use. Each provider needs its CLI tool installed (e.g., `claude` for Claude Code, `codex` for Codex, `opencode` for DeepSeek). If you only route to one provider, one plan is enough.
 
 ### How does the Maestro use multiple models from a single CLI?
 
-The dispatch skill (`skills/dispatch.md`) handles this automatically. When a persona's `preferredModel` matches the host runtime (e.g., you're running Claude Code and the persona wants `claude`), the Maestro dispatches natively using the host's built-in subagent mechanism (e.g., the Task tool). When the `preferredModel` points to a different provider (e.g., `qwen`), the Maestro shells out to that provider's CLI tool (e.g., `opencode`) by piping the assembled prompt via `stdin`. The Providers list in `skills/dispatch.md` maps each model to its CLI — add entries for any provider you want to use.
+The dispatch skill (`skills/dispatch.md`) handles this automatically. When a persona's `preferredModel` matches the host runtime (e.g., you're running Claude Code and the persona wants `claude`), the Maestro dispatches natively using the host's built-in subagent mechanism (e.g., the Task tool). When the `preferredModel` points to a different provider (e.g., `deepseek`), the Maestro shells out to that provider's CLI tool (e.g., `opencode`) by piping the assembled prompt via `stdin`. The Providers list in `skills/dispatch.md` maps each model family to its CLI — see that file for details.
 
 ### Can I use this with just one model?
 

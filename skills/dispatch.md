@@ -1,8 +1,8 @@
 ---
 shortDescription: Assembles sub-agent prompts with task brief and routes to the correct provider.
 usedBy: [maestro]
-version: 0.3.0
-lastUpdated: 2026-06-23
+version: 0.4.0
+lastUpdated: 2026-06-26
 ---
 
 ## Purpose
@@ -42,7 +42,7 @@ This is the only registry. If a persona is not listed there, it does not exist. 
    sed '/^---$/,/^---$/d' personas/<name>.md
    ```
 
-6. **List the rules (scoped).** Consult `rules/README.md` and select commandments, edicts, and counsel whose scope matches the task category. List their file paths in `<rules>` tags — do not inline the file contents. The persona has file access and will read them directly. If no rules match, omit the block entirely. When the task involves code changes — even if the persona does not write code (e.g. architect planning implementations) — include `coding`-scoped rules so the persona's output aligns with the conventions the coder will follow.
+6. **List the rules (scoped).** Consult `rules/README.md` and select rules whose scope matches the task category. List their file paths in `<rules>` tags — do not inline the file contents. The persona has file access and will read them directly. If no rules match, omit the block entirely. When the task involves code changes — even if the persona does not write code (e.g. architect planning implementations) — include `coding`-scoped rules so the persona's output aligns with the conventions the coder will follow.
 
 7. **List relevant skills.** Consult `skills/README.md` and identify skills that would help the persona complete the task. List their file paths in `<skills>` tags. If no extra skills are relevant, omit the block entirely. When the task brief contains ambiguity (missing info, conflicting requirements, multiple valid paths), include `skills/agent-decision.md` so the sub-agent can structure its escalation.
 
@@ -105,8 +105,8 @@ providers:
     tier-3: opencode-go/deepseek-v4-pro
   gemini:
     cli: gemini
-    tier-1: gemini-2.5-flash
-    tier-2: gemini-2.5-pro
+    tier-1: gemini-3.5-flash
+    tier-2: gemini-3.5-flash
     tier-3: gemini-3.1-pro-preview
   host:
     cli: null
@@ -118,22 +118,21 @@ providers:
     tier-1: bailian-coding-plan/qwen3-coder-next
     tier-2: bailian-coding-plan/qwen3.5-plus
     tier-3: bailian-coding-plan/qwen3.6-plus
-  minimax: 
+  minimax:
     cli: opencode
     tier-1: minimax-coding-plan/MiniMax-M2.5
     tier-2: minimax-coding-plan/MiniMax-M2.7
     tier-3: minimax-coding-plan/MiniMax-M2.7
-  zai: 
+  zai:
     cli: opencode
     tier-1: zai-coding-plan/glm-4.7
     tier-2: zai-coding-plan/glm-5-turbo
     tier-3: zai-coding-plan/glm-5.1
-  kimi: 
+  kimi:
     cli: opencode
     tier-1: moonshotai/kimi-k2-turbo-preview
     tier-2: moonshotai/kimi-k2.6
     tier-3: moonshotai/kimi-k2.6
-
 ```
 
 Tier classes: **tier-1** = fast/cheap, **tier-2** = balanced, **tier-3** = reasoning/smartest.

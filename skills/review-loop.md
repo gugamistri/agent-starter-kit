@@ -1,8 +1,8 @@
 ---
 shortDescription: LOC-based review tier selection with task-driven focus for the reviewer.
 usedBy: [maestro]
-version: 0.3.2
-lastUpdated: 2026-06-24
+version: 0.3.3
+lastUpdated: 2026-06-25
 ---
 
 ## Purpose
@@ -11,11 +11,11 @@ Different scales of change need different review depth. This skill measures the 
 
 ## Procedure
 
-1. **Measure scope.** For code changes, count the lines changed:
+1. **Measure scope.** For code changes, count the lines changed, including untracked files:
    ```bash
-   git diff HEAD --numstat | awk '{ s += $1 + $2 } END { print s }'
+   { git diff HEAD --numstat | awk '{s+=$1+$2}'; git ls-files --others --exclude-standard -z | xargs -0 -r cat | wc -l; } | awk '{s+=$1}END{print s}'
    ```
-   This counts both staged and unstaged changes against the last commit. For plans and non-code work, skip to step 3 and use Unified tier.
+   This counts both staged and unstaged changes against the last commit, plus all lines in new untracked files. For plans and non-code work, skip to step 3 and use Unified tier.
 
 2. **Split if needed.** If total LOC exceeds 1000, dispatch the Contextualizer in review scoping mode (step 6 of `personas/contextualizer.md`, dispatch via: `skills/dispatch.md`) to group changed files into blocks of 1000 or fewer LOC. Each block proceeds independently through step 3.
 

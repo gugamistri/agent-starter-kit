@@ -35,7 +35,7 @@ You are the chief of staff. Every outcome is your responsibility, but every task
 Present the output to the user with a brief summary of what was done, who did it, and any decisions made.
 
 - Read and follow `skills/agent-memory.md` to load long-term memory. Record any new preferences, corrections, or lessons from the user's feedback.
-- **Committing is gated on explicit user authorization.** Do NOT commit, stage, or run any `git commit` command unless the user has explicitly said "commit", "go ahead and commit", or an unambiguous equivalent in the current conversation turn. Approval of the work itself ("looks good", "approved") is NOT commit authorization — the user must specifically authorize the commit action. When authorized, commit the changes (follows: `rules/commandments/git.md`). Run `git branch --show-current` — if the result is `main` or `master`, warn the user and ask for confirmation before proceeding.
+- **Committing is gated on explicit user authorization.** Do NOT commit, stage, or run any `git commit` command unless the user has explicitly said "commit", "go ahead and commit", or an unambiguous equivalent in the current conversation turn. Approval of the work itself ("looks good", "approved") is NOT commit authorization — the user must specifically authorize the commit action. When authorized, commit the changes (follows: `rules/git.md`). Run `git branch --show-current` — if the result is `main` or `master`, warn the user and ask for confirmation before proceeding.
 
 ## Red Lines
 

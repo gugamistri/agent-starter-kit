@@ -62,7 +62,7 @@ setupNoCliConfig() {
   mkdir -p "$testDir/.agents/personas"
   cat > "$testDir/.agents/personas/coder.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 shortDescription: Software development.
 ---
@@ -78,7 +78,7 @@ setupSkipsReadme() {
   mkdir -p "$testDir/.agents/personas"
   cat > "$testDir/.agents/personas/coder.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 shortDescription: Software development.
 ---
@@ -86,7 +86,7 @@ You are a coder.
 EOF
   cat > "$testDir/.agents/personas/README.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 ---
 Documentation.
@@ -101,7 +101,7 @@ setupMergesWithExistingAgents() {
   mkdir -p "$testDir/.agents/personas"
   cat > "$testDir/.agents/personas/coder.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 shortDescription: Software development.
 ---
@@ -123,7 +123,7 @@ setupReviewerPersona() {
   mkdir -p "$testDir/.agents/personas"
   cat > "$testDir/.agents/personas/coder.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 shortDescription: Software development.
 ---
@@ -131,7 +131,7 @@ You are a coder.
 EOF
   cat > "$testDir/.agents/personas/reviewer.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 shortDescription: Reviews code.
 ---
@@ -193,7 +193,7 @@ runThinkingBudgetVerificationCases() {
   mkdir -p "$testDir/.agents/personas"
   cat > "$testDir/.agents/personas/introvert.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 humor: introvert
 ---
@@ -201,7 +201,7 @@ Quiet persona.
 EOF
   cat > "$testDir/.agents/personas/pragmatic.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 humor: pragmatic
 ---
@@ -209,7 +209,7 @@ Direct persona.
 EOF
   cat > "$testDir/.agents/personas/sympathetic.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 humor: sympathetic
 ---
@@ -217,7 +217,7 @@ Warm persona.
 EOF
   cat > "$testDir/.agents/personas/extrovert.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 humor: extrovert
 ---
@@ -225,7 +225,7 @@ Outgoing persona.
 EOF
   cat > "$testDir/.agents/personas/robotic.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 humor: robotic
 ---
@@ -233,7 +233,7 @@ Mechanical persona.
 EOF
   cat > "$testDir/.agents/personas/default.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 ---
 No humor field.
@@ -443,7 +443,7 @@ runExternalDirVerificationCases() {
   for personaName in build architect coder reviewer contextualizer; do
     cat > "$testDir/.agents/personas/${personaName}.md" <<EOF
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 shortDescription: ${personaName} persona.
 ---
@@ -580,21 +580,21 @@ EOF
 
   # resolveHostProviderName queries dispatch.md for the provider whose cli == "opencode".
   # The env override bypasses that lookup and forces the provider name directly.
-  # Setting it to "qwen" exercises the resolution path because dispatch.md maps
-  # qwen -> cli: opencode, tier-2 -> bailian-coding-plan/qwen3.5-plus.
-  cd "$testDir" && isRunningInsideSupportedCliEnvOverride=true resolveHostProviderNameEnvOverride=qwen bash "$configureScript" 2>&1 || true
+  # Setting it to "deepseek" exercises the resolution path because dispatch.md maps
+  # deepseek -> cli: opencode, tier-2 -> opencode-go/deepseek-v4-flash.
+  cd "$testDir" && isRunningInsideSupportedCliEnvOverride=true resolveHostProviderNameEnvOverride=deepseek bash "$configureScript" 2>&1 || true
 
   resolvedModel=$(jq -r '.agent.coder.model' "$testDir/opencode.json")
 
-  if [[ "$resolvedModel" != *"qwen"* ]]; then
+  if [[ "$resolvedModel" != *"deepseek"* ]]; then
     cat <<EOF
-FAIL host provider resolves to qwen tier-2 model
-  expected model to contain 'qwen', got: $resolvedModel
+FAIL host provider resolves to deepseek tier-2 model
+  expected model to contain 'deepseek', got: $resolvedModel
 EOF
     failCount=$((failCount + 1))
     return
   fi
-  echo "PASS host provider resolves to qwen tier-2 model"
+  echo "PASS host provider resolves to deepseek tier-2 model"
   passCount=$((passCount + 1))
 }
 
@@ -615,7 +615,7 @@ EOF
 
   cat > "$testDir/.agents/personas/coder.md" <<'EOF'
 ---
-preferredModel: qwen
+preferredModel: deepseek
 modelTier: tier-2
 shortDescription: Software development.
 ---
